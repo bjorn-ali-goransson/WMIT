@@ -104,6 +104,7 @@ if(NOT PACKAGE_SOURCE_ONLY)
 	include_directories(${QGLVIEWER_INCLUDE_DIR})
 endif()
 
+add_subdirectory(3rdparty/kaitai)
 include_directories(
 	src
 	src/basic
@@ -114,6 +115,7 @@ include_directories(
 )
 
 set( wmit_HEADERS
+	3rdparty/blender/blender_blend.h
 	3rdparty/GLEW/include/GL/glew.h
 	src/wmit.h
 	src/basic/IGLShaderManager.h
@@ -148,6 +150,7 @@ set( wmit_HEADERS
 )
 
 set( wmit_SRCS
+	3rdparty/blender/blender_blend.cpp
 	3rdparty/GLEW/src/glew.c
 	src/formats/WZM.cpp
 	src/formats/Pie.cpp
