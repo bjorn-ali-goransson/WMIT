@@ -270,6 +270,10 @@ bool MainWindow::guessModelTypeFromFilename(const QString& fname, wmit_filetype_
 	{
 		type = WMIT_FT_PIE;
 	}
+	else if (ext.compare(QString("blend"), Qt::CaseInsensitive) == 0)
+	{
+		type = WMIT_FT_BLEND;
+	}
 	else
 	{
 		return false;
@@ -393,6 +397,9 @@ bool MainWindow::loadModel(const QString& file, WZM& model, ModelInfo &info, boo
 
 		read_success = model.importFromOBJ(f, settings->value(WMIT_SETTINGS_IMPORT_WELDER, true).toBool());
 		break;
+	case WMIT_FT_BLEND:
+		read_success = model.importFromBLEND(f);
+		break;
 	case WMIT_FT_PIE:
 	case WMIT_FT_PIE2:
 		int pieversion = pieVersion(f);
@@ -468,9 +475,10 @@ void MainWindow::actionOpen()
 	QFileDialog* fileDialog = new QFileDialog(this,
 						  tr("Select File to open"),
 						  m_pathImport,
-						  tr("All Compatible (*.wzm *.pie *.obj);;"
+						  tr("All Compatible (*.wzm *.pie *.blend *.obj);;"
 						     "WZM models (*.wzm);;"
 						     "PIE models (*.pie);;"
+						     "BLEND models (*.blend);;"
 						     "OBJ files (*.obj)"));
 	fileDialog->setFileMode(QFileDialog::ExistingFile);
 	fileDialog->exec();
@@ -610,6 +618,9 @@ void MainWindow::actionSaveAs()
 		if (finfo.suffix().toLower() != "obj")
 			tmpModelinfo.m_saveAsFile += ".obj";
 		break;
+	case WMIT_FT_BLEND:
+		printf("Saving .blend files currently not supported.\n");
+		return;
 	case WMIT_FT_WZM:
 		if (finfo.suffix().toLower() != "wzm")
 			tmpModelinfo.m_saveAsFile += ".wzm";

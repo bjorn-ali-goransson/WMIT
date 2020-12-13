@@ -127,6 +127,27 @@ WZM::operator Pie3Model() const
 	return p3;
 }
 
+bool WZM::importFromBLEND(std::istream& in)
+{
+	clear();
+	
+	//in >> m_textures[WZM_TEX_DIFFUSE];
+
+	meshes = 1;
+
+	m_meshes.resize(static_cast<size_t>(meshes));
+	for(size_t i = 0; i < static_cast<size_t>(meshes); ++i)
+	{
+		Mesh& mesh = m_meshes[i];
+		if (!mesh.read(in))
+		{
+			std::cerr << "WZM::read - Error reading mesh " << meshes + 1;
+			return false;
+		}
+	}
+	return true;
+}
+
 bool WZM::read(std::istream& in)
 {
 	std::string str;

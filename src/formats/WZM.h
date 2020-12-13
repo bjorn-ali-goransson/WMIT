@@ -97,6 +97,8 @@ public:
 	virtual bool read(std::istream& in);
 	virtual void write(std::ostream& out) const;
 
+	virtual bool importFromBLEND(std::istream& in);
+	
 	virtual bool importFromOBJ(std::istream& in, bool welder);
 	virtual void exportToOBJ(std::ostream& out) const;
 
